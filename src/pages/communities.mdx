@@ -1,0 +1,339 @@
+export const description =
+  'On this page, we’ll dive into the different communities endpoints you can use to manage communities programmatically.'
+
+# Communities
+
+Community is a collection of groups. {{ className: 'lead' }}
+
+## The community model
+
+The community model contains reference about your groups. It also contains member in the community.
+
+### Properties
+
+<Properties>
+  <Property name="_id" type="string">
+    Unique identifier for the community.
+  </Property>
+  <Property name="name" type="string">
+    The name for the community.
+  </Property>
+  <Property name="group_id" type="string">
+    List of group id.
+  </Property>
+  <Property name="members" type="string">
+    List of user that are members from this community.
+  </Property>
+  <Property name="created_at" type="timestamp">
+    Timestamp of when the community was created.
+  </Property>
+</Properties>
+
+---
+
+## List all communities {{ tag: 'GET', label: '/v1/communities' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list of all your communities. By default, a maximum of ten communities are shown per page.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="limit" type="integer">
+        Limit the number of communities returned.
+      </Property>
+      <Property name="group_id" type="integer">
+        Only show communities that match the group id
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/communities">
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.communities.list()
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "results": 10,
+      "data": [
+        {
+          "_id": "WAz8eIbvDR60rouK",
+          "name": "Community 1",
+          "group_id": [
+            "asdsabasdsadas",
+            "b341sdagsdfdss",
+          ],
+          "members": [
+            {
+              "name": "Hector"
+              // ...
+            },
+            {
+              "name": "Cedric"
+              // ...
+            },
+            {
+              "name": "Hester"
+              // ...
+            },
+            {
+              "name": "Cliff"
+              // ...
+            }
+          ]
+          "created_at": 692233200
+        },
+        {
+          "_id": "hSIhXBhNe8X1d8Et"
+          // ...
+        }
+      ]
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Create a community {{ tag: 'POST', label: '/v1/communities' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to add a new community to your community list in WhatsApp. To add a community, you must provide their WhatsApp name and list of group id.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="name" type="string">
+        The name for the community.
+      </Property>
+      <Property name="group_id" type="string">
+        The list of group id for community.
+      </Property>
+    </Properties>
+
+     ### Optional attributes
+
+    <Properties>
+      <Property name="members" type="string">
+        The list of member for community.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/communities">
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.communities.create({
+      name: "Community 1",
+      group_id: [
+        "asdsabasdsadas",
+        "b341sdagsdfdss",
+      ],
+    })
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data":  {
+        "_id": "WAz8eIbvDR60rouK",
+        "name": "Community 1",
+        "group_id": [
+          "asdsabasdsadas",
+          "b341sdagsdfdss",
+        ],
+        "members": []
+        "created_at": 692233200
+      },
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve a community {{ tag: 'GET', label: '/v1/communities/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a community by providing their WhatsApp id. Refer to [the list](#the-community-model) at the top of this page to see which properties are included with community objects.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/communities/WAz8eIbvDR60rouK">
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.communities.get('WAz8eIbvDR60rouK')
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data":  {
+        "_id": "WAz8eIbvDR60rouK",
+        "name": "Community 1",
+        "group_id": [
+          "asdsabasdsadas",
+          "b341sdagsdfdss",
+        ],
+        "members": [
+          {
+            "name": "Hector"
+            // ...
+          },
+          {
+            "name": "Cedric"
+            // ...
+          },
+          {
+            "name": "Hester"
+            // ...
+          },
+          {
+            "name": "Cliff"
+            // ...
+          }
+        ]
+        "created_at": 692233200
+      },
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Update a community {{ tag: 'PATCH', label: '/v1/communities/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to perform an update on a community. The attribute that can be updated on communities is the `name`, `members`, and `group_id`.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="name" type="string">
+        The name for the community.
+      </Property>
+      <Property name="group_id" type="string">
+        The list of group id for community.
+      </Property>
+      <Property name="members" type="string">
+        The list of member for community.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="PATCH" label="/v1/communities/WAz8eIbvDR60rouK">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.communities.update('WAz8eIbvDR60rouK', {
+      name: 'Community updated 1',
+    })
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data":  {
+        "_id": "WAz8eIbvDR60rouK",
+        "name": "Community updated 1",
+        "group_id": [
+          "asdsabasdsadas",
+          "b341sdagsdfdss",
+        ],
+        "members": [
+          {
+            "name": "Hector"
+            // ...
+          },
+          {
+            "name": "Cedric"
+            // ...
+          },
+          {
+            "name": "Hester"
+            // ...
+          },
+          {
+            "name": "Cliff"
+            // ...
+          }
+        ]
+        "created_at": 692233200
+      },
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a community {{ tag: 'DELETE', label: '/v1/communities/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to delete communities from your communities list in WhatsApp.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/communities/WAz8eIbvDR60rouK">
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.communities.delete('WAz8eIbvDR60rouK')
+    ```
+    </CodeGroup>
+
+  </Col>
+</Row>

@@ -1,0 +1,326 @@
+export const description =
+  'On this page, we’ll dive into the different user endpoints you can use to manage users programmatically.'
+
+# Users
+
+Individuals who use the WhatsApp application. {{ className: 'lead' }}
+
+## The user model
+
+The user model contains all the information about your users, such as their name, phone number, photo, and status. It also contains a reference to the conversation between you and the contact and information about when they were last active on WhatsApp.
+
+### Properties
+
+<Properties>
+  <Property name="_id" type="string">
+    Unique identifier for the user.
+  </Property>
+  <Property name="name" type="string">
+    The name for the user.
+  </Property>
+  <Property name="phone_number" type="string">
+    The phone number for the user.
+  </Property>
+  <Property name="photo" type="string">
+    The photo image URL for the user.
+  </Property>
+  <Property name="status" type="string">
+    The status for the user.
+  </Property>
+  <Property name="privacy" type="string">
+    The privacy for the user.
+  </Property>
+  <Property name="last_active_at" type="timestamp">
+    Timestamp of when the user was last active on the platform.
+  </Property>
+  <Property name="created_at" type="timestamp">
+    Timestamp of when the user was created.
+  </Property>
+</Properties>
+
+---
+
+## List all users {{ tag: 'GET', label: '/v1/users' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list of all your users. By default, a maximum of ten users are shown per page.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="limit" type="integer">
+        Limit the number of users returned.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.users.list()
+    ```
+
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "results": 8,
+      "data": [
+        {
+          "_id": "WAz8eIbvDR60rouK",
+          "name": "Alvon Jovanus",
+          "phone_number": "0895701268578",
+          "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
+          "status": null,
+          "privacy": {
+            "last_seen": "everyone",
+            "photo": "everyone",
+            "status": "my_contacts"
+          },
+          "last_active_at": 705103200,
+          "created_at": 692233200
+        },
+        {
+          "_id": "hSIhXBhNe8X1d8Et"
+          // ...
+        }
+      ]
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Create a user {{ tag: 'POST', label: '/v1/users' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to add a new user to your user list in WhatsApp. To add a user, you must provide their WhatsApp name and phone number.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="name" type="string">
+        The name for the user.
+      </Property>
+      <Property name="phone_number" type="string">
+        The phone number for the user.
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="photo" type="string">
+        The photo URL for the user.
+      </Property>
+      <Property name="status" type="string">
+        The status for the user.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/users">
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.users.create({
+      name: 'Alvon Jovanus',
+      phone_number: '0895701268578',
+      photo: 'https://assets.whatsapp.chat/avatars/alvon.jpg',
+    })
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "WAz8eIbvDR60rouK",
+        "name": "Alvon Jovanus",
+        "phone_number": "0895701268578",
+        "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
+        "status": null,
+        "privacy": {
+          "last_seen": "everyone",
+          "photo": "everyone",
+          "status": "my_contacts"
+        },
+        "last_active_at": null,
+        "created_at": 692233200
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve a user {{ tag: 'GET', label: '/v1/users/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a user by providing their WhatsApp id. Refer to [the list](#the-user-model) at the top of this page to see which properties are included with user objects.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users/WAz8eIbvDR60rouK">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.users.get('WAz8eIbvDR60rouK')
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "WAz8eIbvDR60rouK",
+        "name": "Alvon Jovanus",
+        "phone_number": "0895701268578",
+        "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
+        "status": null,
+        "privacy": {
+          "last_seen": "everyone",
+          "photo": "everyone",
+          "status": "my_contacts"
+        },
+        "last_active_at": 705103200,
+        "created_at": 692233200
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Update a user {{ tag: 'PATCH', label: '/v1/users/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to perform an update on a user. Currently, you can update `name`, `phone_number`, `status`, and `photo` attribute on user.
+
+    ### Optional attributes
+
+    <Properties>
+     <Property name="name" type="string">
+        The name for the user.
+      </Property>
+      <Property name="phone_number" type="string">
+        The phone number for the user.
+      </Property>
+      <Property name="photo" type="string">
+        The photo URL for the user.
+      </Property>
+      <Property name="status" type="string">
+        The status for the user.
+      </Property>
+      <Property name="privacy" type="string">
+        The privacy for the user.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="PATCH" label="/v1/users/WAz8eIbvDR60rouK">
+
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.users.update('WAz8eIbvDR60rouK', {
+        name: 'Alvon J',
+    })
+    ```
+
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "WAz8eIbvDR60rouK",
+        "name": "Alvon J",
+        "phone_number": "0895701268578",
+        "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
+        "status": null,
+        "privacy": {
+          "last_seen": "everyone",
+          "photo": "everyone",
+          "status": "my_contacts"
+        },
+        "last_active_at": 705103200,
+        "created_at": 692233200
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a user {{ tag: 'DELETE', label: '/v1/users/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to delete users from your user list in WhatsApp.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/users/WAz8eIbvDR60rouK">
+
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.users.delete('WAz8eIbvDR60rouK')
+    ```
+
+
+    </CodeGroup>
+
+  </Col>
+</Row>

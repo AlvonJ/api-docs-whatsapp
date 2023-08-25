@@ -1,0 +1,222 @@
+export const description =
+  'On this page, we’ll dive into the different call endpoints you can use to manage calls programmatically.'
+
+# Calls
+
+Calls are an essential part of WhatsApp — refers to the ability to make voice calls to other users who are also using the WhatsApp application. {{ className: 'lead' }}
+
+## The call model
+
+The call model contains all the information about the calls between caller ID, receiver ID, start time, end time, and duration.
+
+### Properties
+
+<Properties>
+  <Property name="_id" type="string">
+    Unique identifier for the call.
+  </Property>
+  <Property name="caller_id" type="string">
+    Unique identifier for the caller in the call.
+  </Property>
+  <Property name="receiver_id" type="string">
+    Unique identifier for the receiver in the call.
+  </Property>
+  <Property name="start" type="timestamp">
+    Start call timestamp
+  </Property>
+  <Property name="end" type="timestamp">
+    End call timestamp
+  </Property>
+  <Property name="duration" type="timestamp">
+    Duration call timestamp
+  </Property>
+</Properties>
+
+---
+
+## List all calls {{ tag: 'GET', label: '/v1/calls' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list of all your calls. By default, a maximum of ten calls are shown per page.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="limit" type="integer">
+        Limit the number of calls returned.
+      </Property>
+      <Property name="caller_id" type="string">
+        Only show calls that match the caller id
+      </Property>
+      <Property name="receiver_id" type="string">
+        Only show calls that match the receiver id
+      </Property>
+
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/calls">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.calls.list()
+    ```
+
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "results": 10,
+      "data": [
+        {
+          "_id": "xgQQXg3hrtjh7AvZ",
+          "caller_id": "WAz8eIbvDR60rouK",
+          "receiver_id": "Adbsca12fs2asba",
+          "start": 705103200,
+          "end": 705103200,
+          "duration": 692233200,
+        },
+        {
+          "_id": "hSIhXBhNe8X1d8Et"
+          // ...
+        }
+      ]
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Create a call {{ tag: 'POST', label: '/v1/calls' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to add a new call between you and person.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="caller_id" type="string">
+        Unique identifier for the caller in the call.
+      </Property>
+      <Property name="receiver_id" type="string">
+        Unique identifier for the receiver in the call.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/calls">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.calls.create({
+      caller_id: 'WAz8eIbvDR60rouK',
+      receiver_id: 'Adbsca12fs2asba',
+    })
+    ```
+
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "xgQQXg3hrtjh7AvZ",
+        "caller_id": "WAz8eIbvDR60rouK",
+        "receiver_id": "Adbsca12fs2asba",
+        "start": 705103200,
+        "end": 705103200,
+        "duration": 692233200,
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve a call {{ tag: 'GET', label: '/v1/calls/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a call by providing the call id. Refer to [the list](#the-call-model) at the top of this page to see which properties are included with call objects.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/calls/xgQQXg3hrtjh7AvZ">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.calls.get('xgQQXg3hrtjh7AvZ')
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "xgQQXg3hrtjh7AvZ",
+        "caller_id": "WAz8eIbvDR60rouK",
+        "receiver_id": "Adbsca12fs2asba",
+        "start": 705103200,
+        "end": 705103200,
+        "duration": 692233200,
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a call {{ tag: 'DELETE', label: '/v1/calls/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to delete your calls in WhatsApp.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/calls/xgQQXg3hrtjh7AvZ">
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.calls.delete('xgQQXg3hrtjh7AvZ')
+    ```
+    </CodeGroup>
+
+  </Col>
+</Row>

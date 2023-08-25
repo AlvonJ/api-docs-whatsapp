@@ -1,0 +1,357 @@
+export const description =
+  'On this page, we’ll dive into the different group endpoints you can use to manage groups programmatically.'
+
+# Groups
+
+Groups are collection of two or more users who can communicate with each other in a shared chat space in WhatsApp. On this page, we'll dive into the different group endpoints you can use to manage groups programmatically. We'll look at how to query, create, update, and delete groups. {{ className: 'lead' }}
+
+## The group model
+
+The group model contains all the information about your groups, including what contacts are in the group and the group's name, description, and avatar.
+
+### Properties
+
+<Properties>
+  <Property name="_id" type="string">
+    Unique identifier for the group.
+  </Property>
+  <Property name="name" type="string">
+    The name for the group.
+  </Property>
+  <Property name="description" type="string">
+    The description for the group.
+  </Property>
+  <Property name="photo" type="string">
+    The photo image URL for the group.
+  </Property>
+  <Property name="chat_id" type="string">
+    Unique identifier for the chat that belongs to the group.
+  </Property>
+  <Property name="members" type="array">
+    An array of user objects that are members of the group.
+  </Property>
+  <Property name="created_at" type="timestamp">
+    Timestamp of when the group was created.
+  </Property>
+  <Property name="archived_at" type="timestamp">
+    Timestamp of when the group was archived.
+  </Property>
+</Properties>
+
+---
+
+## List all groups {{ tag: 'GET', label: '/v1/groups' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list of all your groups. By default, a maximum of ten groups are shown per page.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="limit" type="integer">
+        Limit the number of groups returned.
+      </Property>
+      <Property name="archived" type="boolean">
+        Only show groups that are archived when set to `true`.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/groups">
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.groups.list()
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "results": 10,
+      "data": [
+        {
+          "_id": "l7cGNIBKZiNJ6wqF",
+          "name": "Plaza Hotel",
+          "description": "World-renowned.",
+          "photo": "https://assets.whatsapp.chat/avatars/plazahotel.jpg",
+          "chat_id": "ZYjVAbCE9g5XRlra",
+          "members": [
+            {
+              "name": "Hector"
+              // ...
+            },
+            {
+              "name": "Cedric"
+              // ...
+            },
+            {
+              "name": "Hester"
+              // ...
+            },
+            {
+              "name": "Cliff"
+              // ...
+            }
+          ],
+          "created_at": 692233200,
+          "archived_at": null
+        },
+        {
+          "_id": "hSIhXBhNe8X1d8Et"
+          // ...
+        }
+      ]
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Create a group {{ tag: 'POST', label: '/v1/groups' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to create a new group chat between you and a group of your WhatsApp contacts.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="name" type="string">
+        The name for the group.
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="description" type="string">
+        The description for the group.
+      </Property>
+      <Property name="photo" type="string">
+        The photo image URL for the group.
+      </Property>
+      <Property name="members" type="array">
+        An array of user objects that are members of the group.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/groups">
+
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.groups.create({
+      name: 'Plaza Hotel',
+    })
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "l7cGNIBKZiNJ6wqF",
+        "name": "Plaza Hotel",
+        "description": null,
+        "avatar_url": null,
+        "conversation_id": "ZYjVAbCE9g5XRlra",
+        "contacts": [],
+        "created_at": 692233200,
+        "archived_at": null
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve a group {{ tag: 'GET', label: '/v1/groups/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a group by providing the group id. Refer to [the list](#the-group-model) at the top of this page to see which properties are included with group objects.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/groups/L7cGNIBKZiNJ6wqF">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.groups.get('L7cGNIBKZiNJ6wqF')
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "l7cGNIBKZiNJ6wqF",
+        "name": "Plaza Hotel",
+        "description": "World-renowned.",
+        "photo": "https://assets.whatsapp.chat/avatars/plazahotel.jpg",
+        "chat_id": "ZYjVAbCE9g5XRlra",
+        "members": [
+          {
+            "name": "Hector"
+            // ...
+          },
+          {
+            "name": "Cedric"
+            // ...
+          },
+          {
+            "name": "Hester"
+            // ...
+          },
+          {
+            "name": "Cliff"
+            // ...
+          }
+        ],
+        "created_at": 692233200,
+        "archived_at": null
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Update a group {{ tag: 'PATCH', label: '/v1/groups/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to perform an update on a group. Examples of updates are changing the name, description, and photo or adding and removing users from the group.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="name" type="string">
+        The new name for the group.
+      </Property>
+      <Property name="description" type="string">
+        The new description for the group.
+      </Property>
+      <Property name="photo" type="string">
+        The new photo image URL for the group.
+      </Property>
+      <Property name="members" type="array">
+        An array of user objects that are members of the group.
+      </Property>
+      <Property name="archived_at" type="timestamp">
+        Timestamp of when the group was archived.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="PATCH" label="/v1/groups/L7cGNIBKZiNJ6wqF">
+
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.groups.update('L7cGNIBKZiNJ6wqF', {
+        description: 'The finest in New York.',
+    })
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "status": "success",
+      "data": {
+        "_id": "l7cGNIBKZiNJ6wqF",
+        "name": "Plaza Hotel",
+        "description": "The finest in New York.",
+        "photo": "https://assets.whatsapp.chat/avatars/plazahotel.jpg",
+        "chat_id": "ZYjVAbCE9g5XRlra",
+        "contacts": [
+          {
+            "name": "Hector"
+            // ...
+          },
+          {
+            "name": "Cedric"
+            // ...
+          },
+          {
+            "name": "Hester"
+            // ...
+          },
+          {
+            "name": "Cliff"
+            // ...
+          }
+        ],
+        "created_at": 692233200,
+        "archived_at": null
+      }
+    },
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Delete a group {{ tag: 'DELETE', label: '/v1/groups/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to delete groups. Note: This will permanently delete the group, including the messages — archive it instead if you want to be able to restore it later.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/groups/L7cGNIBKZiNJ6wqF">
+
+    ```js
+    import ApiClient from '@example/whatsapp-api'
+
+    const client = new ApiClient(token)
+
+    await client.groups.delete('L7cGNIBKZiNJ6wqF')
+    ```
+
+    </CodeGroup>
+
+  </Col>
+</Row>
