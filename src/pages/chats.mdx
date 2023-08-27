@@ -15,6 +15,9 @@ The chat model contains all the information about the chats between you and your
   <Property name="_id" type="string">
     Unique identifier for the chat.
   </Property>
+  <Property name="user_id" type="string">
+    Unique identifier for the user id in the chat.
+  </Property>
   <Property name="contact_id" type="string">
     Unique identifier for the other contact in the chat.
   </Property>
@@ -71,6 +74,9 @@ The chat model contains all the information about the chats between you and your
       <Property name="group_id" type="string">
         Only show chats for the specified group.
       </Property>
+      <Property name="user_id" type="string">
+        Only show chats for the specified user.
+      </Property>
     </Properties>
 
   </Col>
@@ -97,6 +103,7 @@ The chat model contains all the information about the chats between you and your
       "data": [
         {
           "_id": "xgQQXg3hrtjh7AvZ",
+          "user_id": "Adbq21ka2acAdr1",
           "contact_id": "WAz8eIbvDR60rouK",
           "group_id": null,
           "pinned_message_id": null,
@@ -128,6 +135,14 @@ The chat model contains all the information about the chats between you and your
     This endpoint allows you to add a new chat between you and a contact or group. A contact or group id is required to create a chat.
 
     ### Required attributes
+
+    <Properties>
+      <Property name="user_id" type="string">
+        Unique identifier for the user id in the chat.
+      </Property>
+    </Properties>
+
+    ### Optional attributes
 
     <Properties>
       <Property name="contact_id" type="string">
@@ -162,6 +177,7 @@ The chat model contains all the information about the chats between you and your
       "status": "success",
       "data": {
         "_id": "xgQQXg3hrtjh7AvZ",
+        "user_id": "Adbq21ka2acAdr1",
         "contact_id": "WAz8eIbvDR60rouK",
         "group_id": null,
         "pinned_message_id": null,
@@ -208,6 +224,7 @@ The chat model contains all the information about the chats between you and your
       "status": "success",
       "data": {
         "_id": "xgQQXg3hrtjh7AvZ",
+        "user_id": "Adbq21ka2acAdr1",
         "contact_id": "WAz8eIbvDR60rouK",
         "group_id": null,
         "pinned_message_id": null,
@@ -272,6 +289,7 @@ The chat model contains all the information about the chats between you and your
       "status": "success",
       "data": {
         "_id": "xgQQXg3hrtjh7AvZ",
+        "user_id": "Adbq21ka2acAdr1",
         "contact_id": "WAz8eIbvDR60rouK",
         "group_id": null,
         "pinned_message_id": null,

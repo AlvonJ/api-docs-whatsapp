@@ -15,11 +15,11 @@ The call model contains all the information about the calls between caller ID, r
   <Property name="_id" type="string">
     Unique identifier for the call.
   </Property>
-  <Property name="caller_id" type="string">
-    Unique identifier for the caller in the call.
+  <Property name="caller" type="object">
+    The user object for the user who calls .
   </Property>
-  <Property name="receiver_id" type="string">
-    Unique identifier for the receiver in the call.
+  <Property name="receiver" type="object">
+    The user object for the user who receive the call.
   </Property>
   <Property name="start" type="timestamp">
     Start call timestamp
@@ -47,13 +47,12 @@ The call model contains all the information about the calls between caller ID, r
       <Property name="limit" type="integer">
         Limit the number of calls returned.
       </Property>
-      <Property name="caller_id" type="string">
-        Only show calls that match the caller id
+      <Property name="caller" type="object">
+        The user object for the user who calls .
       </Property>
-      <Property name="receiver_id" type="string">
-        Only show calls that match the receiver id
+      <Property name="receiver" type="object">
+        The user object for the user who receive the call.
       </Property>
-
     </Properties>
 
   </Col>
@@ -80,8 +79,18 @@ The call model contains all the information about the calls between caller ID, r
       "data": [
         {
           "_id": "xgQQXg3hrtjh7AvZ",
-          "caller_id": "WAz8eIbvDR60rouK",
-          "receiver_id": "Adbsca12fs2asba",
+          "receiver": {
+            "id": "ASD8eIbvDR60rouK",
+            "username": "Alvon Jovanus",
+            "phone_number": "62-900-759-3000",
+            "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+          },
+          "caller": {
+            "id": "WAz8eIbvDR60rouK",
+            "username": "KevinMcCallister",
+            "phone_number": "1-800-759-3000",
+            "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+          },
           "start": 705103200,
           "end": 705103200,
           "duration": 692233200,
@@ -109,11 +118,11 @@ The call model contains all the information about the calls between caller ID, r
     ### Required attributes
 
     <Properties>
-      <Property name="caller_id" type="string">
-        Unique identifier for the caller in the call.
+      <Property name="caller" type="object">
+        The user object for the user who calls .
       </Property>
-      <Property name="receiver_id" type="string">
-        Unique identifier for the receiver in the call.
+      <Property name="receiver" type="object">
+        The user object for the user who receive the call.
       </Property>
     </Properties>
 
@@ -129,8 +138,18 @@ The call model contains all the information about the calls between caller ID, r
     const client = new ApiClient(token)
 
     await client.calls.create({
-      caller_id: 'WAz8eIbvDR60rouK',
-      receiver_id: 'Adbsca12fs2asba',
+      "receiver": {
+        "id": "ASD8eIbvDR60rouK",
+        "username": "Alvon Jovanus",
+        "phone_number": "62-900-759-3000",
+        "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+      },
+      "caller": {
+        "id": "WAz8eIbvDR60rouK",
+        "username": "KevinMcCallister",
+        "phone_number": "1-800-759-3000",
+        "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+      },
     })
     ```
 
@@ -142,8 +161,18 @@ The call model contains all the information about the calls between caller ID, r
       "status": "success",
       "data": {
         "_id": "xgQQXg3hrtjh7AvZ",
-        "caller_id": "WAz8eIbvDR60rouK",
-        "receiver_id": "Adbsca12fs2asba",
+        "receiver": {
+          "id": "ASD8eIbvDR60rouK",
+          "username": "Alvon Jovanus",
+          "phone_number": "62-900-759-3000",
+          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+        },
+        "caller": {
+          "id": "WAz8eIbvDR60rouK",
+          "username": "KevinMcCallister",
+          "phone_number": "1-800-759-3000",
+          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+        },
         "start": 705103200,
         "end": 705103200,
         "duration": 692233200,
@@ -184,8 +213,18 @@ The call model contains all the information about the calls between caller ID, r
       "status": "success",
       "data": {
         "_id": "xgQQXg3hrtjh7AvZ",
-        "caller_id": "WAz8eIbvDR60rouK",
-        "receiver_id": "Adbsca12fs2asba",
+        "receiver": {
+          "id": "ASD8eIbvDR60rouK",
+          "username": "Alvon Jovanus",
+          "phone_number": "62-900-759-3000",
+          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+        },
+        "caller": {
+          "id": "WAz8eIbvDR60rouK",
+          "username": "KevinMcCallister",
+          "phone_number": "1-800-759-3000",
+          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+        },
         "start": 705103200,
         "end": 705103200,
         "duration": 692233200,

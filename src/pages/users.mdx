@@ -27,8 +27,17 @@ The user model contains all the information about your users, such as their name
   <Property name="status" type="string">
     The status for the user.
   </Property>
-  <Property name="privacy" type="string">
+  <Property name="privacy" type="object">
     The privacy for the user.
+  </Property>
+  <Property name="privacy.last_seen" type="string">
+    The last seen privacy for the user.
+  </Property>
+  <Property name="privacy.photo" type="string">
+    The photo privacy for the user.
+  </Property>
+  <Property name="privacy.status" type="string">
+    The status privacy for the user.
   </Property>
   <Property name="last_active_at" type="timestamp">
     Timestamp of when the user was last active on the platform.

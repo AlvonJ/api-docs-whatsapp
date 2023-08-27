@@ -19,7 +19,7 @@ The message model contains all the information about the messages and attachment
     Unique identifier for the chat the message belongs to.
   </Property>
   <Property name="sender" type="object">
-    The user object for the sender who sent the message.
+    The user object for the user who sent the message.
   </Property>
   <Property name="message" type="string">
     The message content.
@@ -56,6 +56,9 @@ The message model contains all the information about the messages and attachment
       <Property name="chat_id" type="string">
         Limit to messages from a given conversation.
       </Property>
+      <Property name="sender.id" type="string">
+        Limit to messages from a sender ID.
+      </Property>
       <Property name="limit" type="integer">
         Limit the number of messages returned.
       </Property>
@@ -91,8 +94,6 @@ The message model contains all the information about the messages and attachment
             "username": "KevinMcCallister",
             "phone_number": "1-800-759-3000",
             "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
-            "last_active_at": 705103200,
-            "created_at": 692233200
           },
           "message": "It’s a nice night for a neck injury.",
           "reactions": [],
@@ -151,8 +152,14 @@ The message model contains all the information about the messages and attachment
     const client = new ApiClient(token)
 
     await client.messages.send({
-      chat_id: 'xgQQXg3hrtjh7AvZ',
-      message: 'You’re what the French call ‘les incompetents.’',
+      "chat_id": 'xgQQXg3hrtjh7AvZ',
+      "sender": {
+        "id": "WAz8eIbvDR60rouK",
+        "username": "KevinMcCallister",
+        "phone_number": "1-800-759-3000",
+        "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+      },
+      "message": 'You’re what the French call ‘les incompetents.’',
     })
     ```
 
@@ -163,12 +170,10 @@ The message model contains all the information about the messages and attachment
       "id": "gWqY86BMFRiH5o11",
       "chat_id": "xgQQXg3hrtjh7AvZ",
       "sender": {
-        "id": "inEIRvzjC6YLMX3o",
-        "username": "LinnieMcCallister",
+        "id": "WAz8eIbvDR60rouK",
+        "username": "KevinMcCallister",
         "phone_number": "1-800-759-3000",
-        "avatar_url": "https://assets.whatsapp.chat/avatars/linnie.jpg",
-        "last_active_at": 705103200,
-        "created_at": 692233200
+        "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
       },
       "message": "You’re what the French call ‘les incompetents.’",
       "reactions": [],
@@ -217,9 +222,7 @@ The message model contains all the information about the messages and attachment
         "id": "WAz8eIbvDR60rouK",
         "username": "KevinMcCallister",
         "phone_number": "1-800-759-3000",
-        "avatar_url": "https://assets.whatsapp.chat/avatars/kevin.jpg",
-        "last_active_at": 705103200,
-        "created_at": 692233200
+        "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
       },
       "message": "I’m traveling with my dad. He’s at a meeting. I hate meetings.",
       "reactions": [],
@@ -254,6 +257,9 @@ The message model contains all the information about the messages and attachment
       <Property name="attachments" type="array">
         An array of attachment objects associated with the message.
       </Property>
+      <Property name="read_at" type="timestamp">
+        Timestamp of when the message was read.
+      </Property>
     </Properties>
 
   </Col>
@@ -287,8 +293,6 @@ The message model contains all the information about the messages and attachment
         "username": "KevinMcCallister",
         "phone_number": "1-800-759-3000",
         "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
-        "last_active_at": 705103200,
-        "created_at": 692233200
       },
       "message": "I'm not apologizing. I'd rather kiss a toilet seat.",
       "reactions": [

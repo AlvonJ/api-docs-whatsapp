@@ -18,10 +18,10 @@ The community model contains reference about your groups. It also contains membe
   <Property name="name" type="string">
     The name for the community.
   </Property>
-  <Property name="group_id" type="string">
+  <Property name="group_id" type="array">
     List of group id.
   </Property>
-  <Property name="members" type="string">
+  <Property name="members" type="array">
     List of user that are members from this community.
   </Property>
   <Property name="created_at" type="timestamp">
@@ -44,7 +44,7 @@ The community model contains reference about your groups. It also contains membe
       <Property name="limit" type="integer">
         Limit the number of communities returned.
       </Property>
-      <Property name="group_id" type="integer">
+      <Property name="group_id" type="array">
         Only show communities that match the group id
       </Property>
     </Properties>
@@ -122,7 +122,7 @@ The community model contains reference about your groups. It also contains membe
       <Property name="name" type="string">
         The name for the community.
       </Property>
-      <Property name="group_id" type="string">
+      <Property name="group_id" type="array">
         The list of group id for community.
       </Property>
     </Properties>
@@ -130,7 +130,7 @@ The community model contains reference about your groups. It also contains membe
      ### Optional attributes
 
     <Properties>
-      <Property name="members" type="string">
+      <Property name="members" type="array">
         The list of member for community.
       </Property>
     </Properties>
@@ -166,7 +166,7 @@ The community model contains reference about your groups. It also contains membe
           "asdsabasdsadas",
           "b341sdagsdfdss",
         ],
-        "members": []
+        "members": [],
         "created_at": 692233200
       },
     }
@@ -226,7 +226,7 @@ The community model contains reference about your groups. It also contains membe
             "name": "Cliff"
             // ...
           }
-        ]
+        ],
         "created_at": 692233200
       },
     }
@@ -250,10 +250,10 @@ The community model contains reference about your groups. It also contains membe
       <Property name="name" type="string">
         The name for the community.
       </Property>
-      <Property name="group_id" type="string">
+      <Property name="group_id" type="array">
         The list of group id for community.
       </Property>
-      <Property name="members" type="string">
+      <Property name="members" type="array">
         The list of member for community.
       </Property>
     </Properties>
@@ -303,7 +303,7 @@ The community model contains reference about your groups. It also contains membe
             "name": "Cliff"
             // ...
           }
-        ]
+        ],
         "created_at": 692233200
       },
     }
