@@ -34,7 +34,7 @@ The call model contains all the information about the calls between caller ID, r
 
 ---
 
-## List all calls {{ tag: 'GET', label: '/v1/calls' }}
+## List all calls {{ tag: 'GET', label: '/calls' }}
 
 <Row>
   <Col>
@@ -47,18 +47,15 @@ The call model contains all the information about the calls between caller ID, r
       <Property name="limit" type="integer">
         Limit the number of calls returned.
       </Property>
-      <Property name="caller" type="object">
-        The user object for the user who calls .
-      </Property>
-      <Property name="receiver" type="object">
-        The user object for the user who receive the call.
+      <Property name="page" type="integer">
+        Page of users returned.
       </Property>
     </Properties>
 
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/calls">
+    <CodeGroup title="Request" tag="GET" label="/calls">
 
 
     ```js
@@ -66,7 +63,7 @@ The call model contains all the information about the calls between caller ID, r
 
     const client = new ApiClient(token)
 
-    await client.calls.list()
+    await client.calls.list({ limit: 10, page: 1})
     ```
 
 
@@ -74,29 +71,34 @@ The call model contains all the information about the calls between caller ID, r
 
     ```json {{ title: 'Response' }}
     {
-      "status": "success",
-      "results": 10,
-      "data": [
+    "status": "success",
+    "results": 10,
+    "page": 1,
+    "data": [
         {
-          "_id": "xgQQXg3hrtjh7AvZ",
-          "receiver": {
-            "id": "ASD8eIbvDR60rouK",
-            "username": "Alvon Jovanus",
-            "phone_number": "62-900-759-3000",
-            "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
-          },
+          "_id": "65260f29be7bb634fdef96eb",
           "caller": {
-            "id": "WAz8eIbvDR60rouK",
-            "username": "KevinMcCallister",
-            "phone_number": "1-800-759-3000",
-            "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+            "id": "WEPdb29u63dLdR2lxst0eLui",
+            "email": "Orie.Rosenbaum63@yahoo.com",
+            "password": "vPUd7z2Fgi_2GDA",
+            "phone": "8775584276",
+            "username": "Clay",
+            "photo": "https://loremflickr.com/640/480?lock=3085287343259648"
           },
-          "start": 705103200,
-          "end": 705103200,
-          "duration": 692233200,
+          "receiver": {
+            "id": "9NIXuO0tcsE2qRfXrpWiImR5",
+            "email": "Sammy.Kunde71@gmail.com",
+            "password": "VxCLrCJj5gio7WA",
+            "phone": "16698142669",
+            "username": "Melany",
+            "photo": "https://loremflickr.com/640/480?lock=1206485268824064"
+          },
+          "start": 1696986853123,
+          "end": 1697039266753,
+          "duration": 1697052931764
         },
         {
-          "_id": "hSIhXBhNe8X1d8Et"
+          "_id": "ab260f29be7bb634fdef9612"
           // ...
         }
       ]
@@ -108,7 +110,7 @@ The call model contains all the information about the calls between caller ID, r
 
 ---
 
-## Create a call {{ tag: 'POST', label: '/v1/calls' }}
+## Create a call {{ tag: 'POST', label: '/calls' }}
 
 <Row>
   <Col>
@@ -129,7 +131,7 @@ The call model contains all the information about the calls between caller ID, r
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/v1/calls">
+    <CodeGroup title="Request" tag="POST" label="/calls">
 
 
     ```js
@@ -138,17 +140,21 @@ The call model contains all the information about the calls between caller ID, r
     const client = new ApiClient(token)
 
     await client.calls.create({
-      "receiver": {
-        "id": "ASD8eIbvDR60rouK",
-        "username": "Alvon Jovanus",
-        "phone_number": "62-900-759-3000",
-        "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
-      },
       "caller": {
-        "id": "WAz8eIbvDR60rouK",
-        "username": "KevinMcCallister",
-        "phone_number": "1-800-759-3000",
-        "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+        "id": "WEPdb29u63dLdR2lxst0eLui",
+        "email": "Orie.Rosenbaum63@yahoo.com",
+        "password": "vPUd7z2Fgi_2GDA",
+        "phone": "8775584276",
+        "username": "Clay",
+        "photo": "https://loremflickr.com/640/480?lock=3085287343259648"
+      },
+      "receiver": {
+        "id": "9NIXuO0tcsE2qRfXrpWiImR5",
+        "email": "Sammy.Kunde71@gmail.com",
+        "password": "VxCLrCJj5gio7WA",
+        "phone": "16698142669",
+        "username": "Melany",
+        "photo": "https://loremflickr.com/640/480?lock=1206485268824064"
       },
     })
     ```
@@ -162,19 +168,23 @@ The call model contains all the information about the calls between caller ID, r
       "data": {
         "_id": "xgQQXg3hrtjh7AvZ",
         "receiver": {
-          "id": "ASD8eIbvDR60rouK",
-          "username": "Alvon Jovanus",
-          "phone_number": "62-900-759-3000",
-          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+          "id": "9NIXuO0tcsE2qRfXrpWiImR5",
+          "email": "Sammy.Kunde71@gmail.com",
+          "password": "VxCLrCJj5gio7WA",
+          "phone": "16698142669",
+          "username": "Melany",
+          "photo": "https://loremflickr.com/640/480?lock=1206485268824064"
         },
         "caller": {
-          "id": "WAz8eIbvDR60rouK",
-          "username": "KevinMcCallister",
-          "phone_number": "1-800-759-3000",
-          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+          "id": "WEPdb29u63dLdR2lxst0eLui",
+          "email": "Orie.Rosenbaum63@yahoo.com",
+          "password": "vPUd7z2Fgi_2GDA",
+          "phone": "8775584276",
+          "username": "Clay",
+          "photo": "https://loremflickr.com/640/480?lock=3085287343259648"
         },
         "start": 705103200,
-        "end": 705103200,
+        "end": 705103300,
         "duration": 692233200,
       }
     }
@@ -185,7 +195,7 @@ The call model contains all the information about the calls between caller ID, r
 
 ---
 
-## Retrieve a call {{ tag: 'GET', label: '/v1/calls/:id' }}
+## Retrieve a call {{ tag: 'GET', label: '/calls/:id' }}
 
 <Row>
   <Col>
@@ -195,7 +205,7 @@ The call model contains all the information about the calls between caller ID, r
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/calls/xgQQXg3hrtjh7AvZ">
+    <CodeGroup title="Request" tag="GET" label="/calls/xgQQXg3hrtjh7AvZ">
 
 
     ```js
@@ -214,19 +224,23 @@ The call model contains all the information about the calls between caller ID, r
       "data": {
         "_id": "xgQQXg3hrtjh7AvZ",
         "receiver": {
-          "id": "ASD8eIbvDR60rouK",
-          "username": "Alvon Jovanus",
-          "phone_number": "62-900-759-3000",
-          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+          "id": "9NIXuO0tcsE2qRfXrpWiImR5",
+          "email": "Sammy.Kunde71@gmail.com",
+          "password": "VxCLrCJj5gio7WA",
+          "phone": "16698142669",
+          "username": "Melany",
+          "photo": "https://loremflickr.com/640/480?lock=1206485268824064"
         },
         "caller": {
-          "id": "WAz8eIbvDR60rouK",
-          "username": "KevinMcCallister",
-          "phone_number": "1-800-759-3000",
-          "avatar_url": "https://assets.whatsapp.chat/avatars/buzzboy.jpg",
+          "id": "WEPdb29u63dLdR2lxst0eLui",
+          "email": "Orie.Rosenbaum63@yahoo.com",
+          "password": "vPUd7z2Fgi_2GDA",
+          "phone": "8775584276",
+          "username": "Clay",
+          "photo": "https://loremflickr.com/640/480?lock=3085287343259648"
         },
         "start": 705103200,
-        "end": 705103200,
+        "end": 705103300,
         "duration": 692233200,
       }
     }
@@ -237,7 +251,7 @@ The call model contains all the information about the calls between caller ID, r
 
 ---
 
-## Delete a call {{ tag: 'DELETE', label: '/v1/calls/:id' }}
+## Delete a call {{ tag: 'DELETE', label: '/calls/:id' }}
 
 <Row>
   <Col>
@@ -247,7 +261,7 @@ The call model contains all the information about the calls between caller ID, r
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="DELETE" label="/v1/calls/xgQQXg3hrtjh7AvZ">
+    <CodeGroup title="Request" tag="DELETE" label="/calls/xgQQXg3hrtjh7AvZ">
     ```js
     import ApiClient from '@example/whatsapp-api'
 
@@ -256,6 +270,9 @@ The call model contains all the information about the calls between caller ID, r
     await client.calls.delete('xgQQXg3hrtjh7AvZ')
     ```
     </CodeGroup>
+    ```json {{ title: 'Response' }}
+    // No response
+    ```
 
   </Col>
 </Row>

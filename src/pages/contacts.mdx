@@ -18,7 +18,7 @@ The contact model contains all the information about your contacts, such as thei
   <Property name="name" type="string">
     The name for the contact.
   </Property>
-  <Property name="phone_number" type="string">
+  <Property name="phone" type="string">
     The phone number for the contact.
   </Property>
   <Property name="user_id" type="string">
@@ -31,7 +31,7 @@ The contact model contains all the information about your contacts, such as thei
 
 ---
 
-## List all contacts {{ tag: 'GET', label: '/v1/contacts' }}
+## List all contacts {{ tag: 'GET', label: '/contacts' }}
 
 <Row>
   <Col>
@@ -42,21 +42,24 @@ The contact model contains all the information about your contacts, such as thei
 
     <Properties>
       <Property name="limit" type="integer">
-        Limit the number of contacts returned.
+        Limit the number of users returned.
+      </Property>
+      <Property name="page" type="integer">
+        Page of users returned.
       </Property>
     </Properties>
 
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/contacts">
+    <CodeGroup title="Request" tag="GET" label="/contacts">
 
     ```js
     import ApiClient from '@example/whatsapp-api'
 
     const client = new ApiClient(token)
 
-    await client.contacts.list()
+    await client.contacts.list({ limit: 10, page: 1 })
     ```
 
     </CodeGroup>
@@ -65,11 +68,12 @@ The contact model contains all the information about your contacts, such as thei
     {
       "status": "success",
       "results": 10,
+      "page": 1,
       "data": [
         {
           "_id": "WAz8eIbvDR60rouK",
           "name": "Alvon Jovanus",
-          "phone_number": "0895701268578",
+          "phone": "0895701268578",
           "user_id": "xgQQXg3hrtjh7AvZ",
           "created_at": 692233200
         },
@@ -86,7 +90,7 @@ The contact model contains all the information about your contacts, such as thei
 
 ---
 
-## Create a contact {{ tag: 'POST', label: '/v1/contacts' }}
+## Create a contact {{ tag: 'POST', label: '/contacts' }}
 
 <Row>
   <Col>
@@ -99,7 +103,7 @@ The contact model contains all the information about your contacts, such as thei
       <Property name="name" type="string">
         The name for the contact.
       </Property>
-      <Property name="phone_number" type="string">
+      <Property name="phone" type="string">
         The phone number for the contact.
       </Property>
       <Property name="user_id" type="string">
@@ -110,7 +114,7 @@ The contact model contains all the information about your contacts, such as thei
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/v1/contacts">
+    <CodeGroup title="Request" tag="POST" label="/contacts">
 
     ```js
     import ApiClient from '@example/whatsapp-api'
@@ -119,7 +123,7 @@ The contact model contains all the information about your contacts, such as thei
 
     await client.contacts.create({
       name: 'Alvon Jovanus',
-      phone_number: '0895701268578',
+      phone: '0895701268578',
       user_id: 'xgQQXg3hrtjh7AvZ',
     })
     ```
@@ -132,7 +136,7 @@ The contact model contains all the information about your contacts, such as thei
       "data": {
         "_id": "WAz8eIbvDR60rouK",
         "name": "Alvon Jovanus",
-        "phone_number": "0895701268578",
+        "phone": "0895701268578",
         "user_id": "xgQQXg3hrtjh7AvZ",
         "created_at": 692233200
       }
@@ -144,7 +148,7 @@ The contact model contains all the information about your contacts, such as thei
 
 ---
 
-## Retrieve a contact {{ tag: 'GET', label: '/v1/contacts/:id' }}
+## Retrieve a contact {{ tag: 'GET', label: '/contacts/:id' }}
 
 <Row>
   <Col>
@@ -154,7 +158,7 @@ The contact model contains all the information about your contacts, such as thei
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/contacts/WAz8eIbvDR60rouK">
+    <CodeGroup title="Request" tag="GET" label="/contacts/WAz8eIbvDR60rouK">
 
     ```js
     import ApiClient from '@example/whatsapp-api'
@@ -172,7 +176,7 @@ The contact model contains all the information about your contacts, such as thei
       "data": {
         "_id": "WAz8eIbvDR60rouK",
         "name": "Alvon Jovanus",
-        "phone_number": "0895701268578",
+        "phone": "0895701268578",
         "user_id": "xgQQXg3hrtjh7AvZ",
         "created_at": 692233200
       }
@@ -184,12 +188,12 @@ The contact model contains all the information about your contacts, such as thei
 
 ---
 
-## Update a contact {{ tag: 'PATCH', label: '/v1/contacts/:id' }}
+## Update a contact {{ tag: 'PATCH', label: '/contacts/:id' }}
 
 <Row>
   <Col>
 
-    This endpoint allows you to perform an update on a contact. The only attribute that can be updated on contacts is the `name` and `phone_number` attribute which controls how a contact appears in your contact list in WhatsApp.
+    This endpoint allows you to perform an update on a contact. The only attribute that can be updated on contacts is the `name` and `phone` attribute which controls how a contact appears in your contact list in WhatsApp.
 
     ### Optional attributes
 
@@ -197,7 +201,7 @@ The contact model contains all the information about your contacts, such as thei
       <Property name="name" type="string">
         The contact name in the contact list.
       </Property>
-      <Property name="phone_number" type="string">
+      <Property name="phone" type="string">
         The contact phone number in the contact list.
       </Property>
     </Properties>
@@ -205,7 +209,7 @@ The contact model contains all the information about your contacts, such as thei
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="PATCH" label="/v1/contacts/WAz8eIbvDR60rouK">
+    <CodeGroup title="Request" tag="PATCH" label="/contacts/WAz8eIbvDR60rouK">
 
 
     ```js
@@ -215,7 +219,7 @@ The contact model contains all the information about your contacts, such as thei
 
     await client.contacts.update('WAz8eIbvDR60rouK', {
         name: 'Alvon J',
-        phone_number: '08222222222'
+        phone: '08222222222'
     })
     ```
 
@@ -227,7 +231,7 @@ The contact model contains all the information about your contacts, such as thei
       "data": {
         "_id": "WAz8eIbvDR60rouK",
         "name": "Alvon J",
-        "phone_number": "08222222222",
+        "phone": "08222222222",
         "user_id": "xgQQXg3hrtjh7AvZ",
         "created_at": 692233200
       }
@@ -239,7 +243,7 @@ The contact model contains all the information about your contacts, such as thei
 
 ---
 
-## Delete a contact {{ tag: 'DELETE', label: '/v1/contacts/:id' }}
+## Delete a contact {{ tag: 'DELETE', label: '/contacts/:id' }}
 
 <Row>
   <Col>
@@ -249,7 +253,7 @@ The contact model contains all the information about your contacts, such as thei
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="DELETE" label="/v1/contacts/WAz8eIbvDR60rouK">
+    <CodeGroup title="Request" tag="DELETE" label="/contacts/WAz8eIbvDR60rouK">
 
     ```js
     import ApiClient from '@example/whatsapp-api'
@@ -259,6 +263,9 @@ The contact model contains all the information about your contacts, such as thei
     await client.contacts.delete('WAz8eIbvDR60rouK')
     ```
     </CodeGroup>
+    ```json {{ title: 'Response' }}
+    // No response
+    ```
 
   </Col>
 </Row>

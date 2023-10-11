@@ -15,10 +15,10 @@ The user model contains all the information about your users, such as their name
   <Property name="_id" type="string">
     Unique identifier for the user.
   </Property>
-  <Property name="name" type="string">
-    The name for the user.
+  <Property name="username" type="string">
+    The username for the user.
   </Property>
-  <Property name="phone_number" type="string">
+  <Property name="phone" type="string">
     The phone number for the user.
   </Property>
   <Property name="photo" type="string">
@@ -49,7 +49,7 @@ The user model contains all the information about your users, such as their name
 
 ---
 
-## List all users {{ tag: 'GET', label: '/v1/users' }}
+## List all users {{ tag: 'GET', label: '/users' }}
 
 <Row>
   <Col>
@@ -62,12 +62,15 @@ The user model contains all the information about your users, such as their name
       <Property name="limit" type="integer">
         Limit the number of users returned.
       </Property>
+      <Property name="page" type="integer">
+        Page of users returned.
+      </Property>
     </Properties>
 
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/users">
+    <CodeGroup title="Request" tag="GET" label="/users">
 
 
     ```js
@@ -75,33 +78,35 @@ The user model contains all the information about your users, such as their name
 
     const client = new ApiClient(token)
 
-    await client.users.list()
+    await client.users.list({ limit: 8, page: 1})
     ```
 
 
     </CodeGroup>
 
-    ```json {{ title: 'Response' }}
+    ```json {{ title: 'Response', statusCode: 200 }}
     {
       "status": "success",
       "results": 8,
+      "page": 1,
       "data": [
         {
-          "_id": "WAz8eIbvDR60rouK",
-          "name": "Alvon Jovanus",
-          "phone_number": "0895701268578",
-          "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
-          "status": null,
-          "privacy": {
-            "last_seen": "everyone",
-            "photo": "everyone",
-            "status": "my_contacts"
-          },
-          "last_active_at": 705103200,
-          "created_at": 692233200
+            "_id": "652608bd60bb49fe10c7b719",
+            "username": "AlvonJ",
+            "password": "123456",
+            "email": "alvonj@gmail.com",
+            "phone": "0823232131",
+            "status": "Haha",
+            "privacy": {
+                "last_seen": "everyone",
+                "photo": "nobody",
+                "status": "my_contacts"
+            },
+            "photo": null,
+            "created_at": 1696991420964
         },
         {
-          "_id": "hSIhXBhNe8X1d8Et"
+          "_id": "652608bd60bb49fe10c7b720"
           // ...
         }
       ]
@@ -113,7 +118,7 @@ The user model contains all the information about your users, such as their name
 
 ---
 
-## Create a user {{ tag: 'POST', label: '/v1/users' }}
+## Create a user {{ tag: 'POST', label: '/users' }}
 
 <Row>
   <Col>
@@ -123,10 +128,10 @@ The user model contains all the information about your users, such as their name
     ### Required attributes
 
     <Properties>
-      <Property name="name" type="string">
-        The name for the user.
+      <Property name="username" type="string">
+        The username for the user.
       </Property>
-      <Property name="phone_number" type="string">
+      <Property name="phone" type="string">
         The phone number for the user.
       </Property>
     </Properties>
@@ -145,7 +150,7 @@ The user model contains all the information about your users, such as their name
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/v1/users">
+    <CodeGroup title="Request" tag="POST" label="/users">
 
     ```js
     import ApiClient from '@example/whatsapp-api'
@@ -153,9 +158,11 @@ The user model contains all the information about your users, such as their name
     const client = new ApiClient(token)
 
     await client.users.create({
-      name: 'Alvon Jovanus',
-      phone_number: '0895701268578',
-      photo: 'https://assets.whatsapp.chat/avatars/alvon.jpg',
+      email: "test1@gmail.com",
+      phone: "0823232131",
+      username: "Test 1",
+      password: "123456",
+      status: "Haha"
     })
     ```
 
@@ -165,18 +172,19 @@ The user model contains all the information about your users, such as their name
     {
       "status": "success",
       "data": {
-        "_id": "WAz8eIbvDR60rouK",
-        "name": "Alvon Jovanus",
-        "phone_number": "0895701268578",
-        "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
-        "status": null,
+        "_id": "652608bd60bb49fe10c7b719",
+        "username": "Test 1",
+        "password": "123456",
+        "email": "test1@gmail.com",
+        "phone": "0823232131",
+        "status": "Haha",
         "privacy": {
           "last_seen": "everyone",
           "photo": "everyone",
-          "status": "my_contacts"
+          "status": "everyone"
         },
-        "last_active_at": null,
-        "created_at": 692233200
+        "photo": null,
+        "created_at": 1696991420964
       }
     }
     ```
@@ -186,7 +194,7 @@ The user model contains all the information about your users, such as their name
 
 ---
 
-## Retrieve a user {{ tag: 'GET', label: '/v1/users/:id' }}
+## Retrieve a user {{ tag: 'GET', label: '/users/:id' }}
 
 <Row>
   <Col>
@@ -196,7 +204,7 @@ The user model contains all the information about your users, such as their name
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/v1/users/WAz8eIbvDR60rouK">
+    <CodeGroup title="Request" tag="GET" label="/users/652608bd60bb49fe10c7b719">
 
 
     ```js
@@ -204,7 +212,7 @@ The user model contains all the information about your users, such as their name
 
     const client = new ApiClient(token)
 
-    await client.users.get('WAz8eIbvDR60rouK')
+    await client.users.get('652608bd60bb49fe10c7b719')
     ```
 
     </CodeGroup>
@@ -213,18 +221,19 @@ The user model contains all the information about your users, such as their name
     {
       "status": "success",
       "data": {
-        "_id": "WAz8eIbvDR60rouK",
-        "name": "Alvon Jovanus",
-        "phone_number": "0895701268578",
-        "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
-        "status": null,
+        "_id": "652608bd60bb49fe10c7b719",
+        "username": "Test 1",
+        "password": "123456",
+        "email": "test1@gmail.com",
+        "phone": "0823232131",
+        "status": "Haha",
         "privacy": {
           "last_seen": "everyone",
           "photo": "everyone",
-          "status": "my_contacts"
+          "status": "everyone"
         },
-        "last_active_at": 705103200,
-        "created_at": 692233200
+        "photo": null,
+        "created_at": 1696991420964
       }
     }
     ```
@@ -234,20 +243,20 @@ The user model contains all the information about your users, such as their name
 
 ---
 
-## Update a user {{ tag: 'PATCH', label: '/v1/users/:id' }}
+## Update a user {{ tag: 'PATCH', label: '/users/:id' }}
 
 <Row>
   <Col>
 
-    This endpoint allows you to perform an update on a user. Currently, you can update `name`, `phone_number`, `status`, and `photo` attribute on user.
+    This endpoint allows you to perform an update on a user. Currently, you can update `username`, `phone`, `status`, `photo`, `privacy` attribute on user.
 
     ### Optional attributes
 
     <Properties>
-     <Property name="name" type="string">
-        The name for the user.
+      <Property name="username" type="string">
+        The username for the user.
       </Property>
-      <Property name="phone_number" type="string">
+      <Property name="phone" type="string">
         The phone number for the user.
       </Property>
       <Property name="photo" type="string">
@@ -264,39 +273,35 @@ The user model contains all the information about your users, such as their name
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="PATCH" label="/v1/users/WAz8eIbvDR60rouK">
-
-
-
+    <CodeGroup title="Request" tag="PATCH" label="/users/WAz8eIbvDR60rouK">
     ```js
     import ApiClient from '@example/whatsapp-api'
 
     const client = new ApiClient(token)
 
-    await client.users.update('WAz8eIbvDR60rouK', {
-        name: 'Alvon J',
+    await client.users.update('652608bd60bb49fe10c7b719', {
+        username: 'Alvon J',
     })
     ```
-
-
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
     {
       "status": "success",
       "data": {
-        "_id": "WAz8eIbvDR60rouK",
-        "name": "Alvon J",
-        "phone_number": "0895701268578",
-        "photo": "https://assets.whatsapp.chat/avatars/alvon.jpg",
-        "status": null,
+        "_id": "652608bd60bb49fe10c7b719",
+        "username": "Alvon J",
+        "password": "123456",
+        "email": "test1@gmail.com",
+        "phone": "0823232131",
+        "status": "Haha",
         "privacy": {
           "last_seen": "everyone",
           "photo": "everyone",
-          "status": "my_contacts"
+          "status": "everyone"
         },
-        "last_active_at": 705103200,
-        "created_at": 692233200
+        "photo": null,
+        "created_at": 1696991420964
       }
     }
     ```
@@ -306,7 +311,7 @@ The user model contains all the information about your users, such as their name
 
 ---
 
-## Delete a user {{ tag: 'DELETE', label: '/v1/users/:id' }}
+## Delete a user {{ tag: 'DELETE', label: '/users/:id' }}
 
 <Row>
   <Col>
@@ -316,10 +321,7 @@ The user model contains all the information about your users, such as their name
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="DELETE" label="/v1/users/WAz8eIbvDR60rouK">
-
-
-
+    <CodeGroup title="Request" tag="DELETE" label="/users/WAz8eIbvDR60rouK">
     ```js
     import ApiClient from '@example/whatsapp-api'
 
@@ -327,9 +329,11 @@ The user model contains all the information about your users, such as their name
 
     await client.users.delete('WAz8eIbvDR60rouK')
     ```
-
-
     </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    // No response
+    ```
 
   </Col>
 </Row>
